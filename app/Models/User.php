@@ -44,3 +44,55 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 }
+        protected int $page_items = 10;
+
+        public function scopeSearchFilter($query, $search_filter, $search)
+        {
+            return $query->where($search_filter, 'ilike', '%' . $search . '%');
+        }
+
+        public function scopeWithFilter($query, $search_filter, $search)
+        {
+            $column = request()->column ? request()->column : 'id';
+            $order = request()->order ? request()->order : 'asc';
+
+            return $query->when(request()->has(['search', 'column', 'order']), function($query) {
+                $query->searchFilter(request()->search_filter, request()->search);
+                $query->orderBy( request()->column, request()->order );
+            })
+                ->when(request()->has(['search']), function ($query) {
+                    $query->where(request()->search_filter, 'ilike', '%' . request()->search . '%');
+                })
+                ->orderBy( $column, $order )
+                ->paginate($this->page_items)
+                ->withQueryString()
+                ->through(fn ($user) => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'created_at' => Carbon::parse($user->created_at)->format('M d Y'),
+                ]);
+        }
+
+        public function scopeWithoutFilter($query, $search)
+        {
+            $column = request()->column ? request()->column : 'id';
+            $order = request()->order ? request()->order : 'asc';
+
+            return $query->when(request()->has(['search', 'column', 'order']), function($query) {
+                $query->where('name', 'ilike', '%' . request()->search . '%');
+                $query->orderBy( request()->column, request()->order );
+            })
+                ->when(request()->has(['search']), function ($query) {
+                    $query->where('name', 'ilike', '%' . request()->search . '%');
+                })
+                ->orderBy( $column, $order )
+                ->paginate($this->page_items)
+                ->withQueryString()
+                ->through(fn ($user) => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'created_at' => Carbon::parse($user->created_at)->format('M d Y'),
+                ]);
+        }
