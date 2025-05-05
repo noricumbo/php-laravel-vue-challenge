@@ -10,7 +10,9 @@
         <li>Create new users</li>
         <li>Modify them</li>
         <li>Delete them</li>
-        <li>Add them to a team (selecting existing one or creating it)</li>
+        <li>View Teams</li>
+        <li>Edit Teams details</li>
+        <li>Add users (members) to a Team</li>
     </ul>
 
 </template>
