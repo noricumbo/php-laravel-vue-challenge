@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -21,3 +22,8 @@ Route::get('/', function () {
 
 // Users routes
 Route::resource('users', UserController::class);
+
+// Teams routes
+Route::resource('teams', TeamController::class);
+Route::get('teams-select-members', [TeamController::class, 'selectMembers']);
+Route::post('teams-save-members', [TeamController::class, 'saveMembers']);
