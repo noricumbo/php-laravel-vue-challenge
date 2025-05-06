@@ -60,7 +60,7 @@ Team updates are handled also through a single Inertia/Vue request affecting two
 
 ## Installation requirements
 
-	- Git installed
+	- Git updated version installed on your machine
 	- Composer updated version installed on your machine
 	- Node and npm updated versions installed on your machine
 	- PostgreSQL 15 (preferably, but it also should work with SQLite) installed on your machine
