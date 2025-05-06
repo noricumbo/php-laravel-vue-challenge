@@ -30,7 +30,7 @@ import { useUserStore } from "../Stores/UserStore.js"
 
 const userStore = useUserStore();
 
-// Ask for a username
+/** Here you can uncomment a Prompt that asks for your name and store it with Pinia **/
 
 // const currentName = prompt("Hi, what's your name?")
 // userStore.name = currentName
